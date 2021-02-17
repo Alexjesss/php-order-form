@@ -40,12 +40,13 @@ Should you use a COOKIE or a SESSION variable for this?
 The food items should be the default.
 
 ### Step 4: Calculate the delivery time
-Calculate the expected delivery time for the product. For normal delivery all orders are fulfilled in 2 hours, for express delivery it is only 45 minutes.
+- [X] Calculate the expected delivery time for the product. For normal delivery all orders are fulfilled in 2 hours, 
+for express delivery it is only 45 minutes.
 Add this expected time to the confirmation message.
 If you are wondering: they deliver with drones.
 
 ### Step 5: Total revenue counter
-Add a counter at the bottom of the page that shows the total amount of money that has been spent on this page from this browser. 
+- [X] Add a counter at the bottom of the page that shows the total amount of money that has been spent on this page from this browser. 
 Should you use a COOKIE or a SESSION variable for this?
 
 ### Step 6: Send the e-mail
