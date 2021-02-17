@@ -21,22 +21,22 @@ This counter should keep going up even when the user closes his browser.
 You can start modifying index.php and form-view.php, they already contain some code to help you on your way.
 ## Required features
 ### Step 1: Validation
-- [ ] Validate that the field e-mail is filled in and a valid e-mail address
+- [X] Validate that the field e-mail is filled in and a valid e-mail address
 - [X] Make sure that the street, street number, city and zipcode is a required field.
 - [X] Make sure that street number and zipcode are only numbers.
 - [X] After sending the form, when you have errors show them in a nice error box above the form, you can use the [bootstrap alerts](https://getbootstrap.com/docs/4.0/components/alerts/) for inspiration.
-    - You do not need to show each error with it's matching field, showing all errors on top of the form is enough for now. You can always come back it later and make it nicer.
+    - [X] You do not need to show each error with it's matching field, showing all errors on top of the form is enough for now. You can always come back it later and make it nicer.
 - [X] If the form is invalid make sure all the values the user entered are still displayed in the form, so he doesn't need to fill them all in again!
-- If the form is valid (for now) just show the user a message above the form that his order has been sent
+- [X] If the form is valid (for now) just show the user a message above the form that his order has been sent
 
 ### Step 2: Make sure the address is saved
 - [X] Save all the address information as long as the user doesn't close the browser. When he closes the browser it is oké to lose his information.
 
-Prefill the address fields with the saved address.
+- [X] Prefill the address fields with the saved address.
 Should you use a COOKIE or a SESSION variable for this?
 
 ### Step 3: Switch between drinks and food
-There are 2 different $product arrays, one with drinks, the other with food. Depending on which link at the top of the page you click, you should be able to order food or drinks (never both).
+- [X] There are 2 different $product arrays, one with drinks, the other with food. Depending on which link at the top of the page you click, you should be able to order food or drinks (never both).
 The food items should be the default.
 
 ### Step 4: Calculate the delivery time
