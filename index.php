@@ -105,12 +105,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
     // ORDER BUTTON
 
-if (isset($_POST["orderButton"]) && ($email == "" || $street == "" || $streetnumber == "" || $city == "" || $zipcode == "")) {
-    $order_error = "* please fill in the form (todo and array) to complete your order!";
+if (isset($_POST["orderButton"]) && ($email == "" || $street == "" || $streetnumber == "" || $city == "" || $zipcode == "") && !isset($_POST["products"])) {
+    $order_error = "* please fill in the form and array to complete your order!";
 } else {
     $order = "Everything is filled in, your order has been registered!";
 }
-
 
     // CALCULATING ORDERS
 
@@ -123,12 +122,12 @@ if (isset($_POST["orderButton"]) && ($email == "" || $street == "" || $streetnum
          echo "Your order will be done at "." ". date( "H:i", $newTime)." ". "Hours";
         }
     elseif (isset($_POST["express_delivery"])) {
-        $currentTime = time();
+        $currentTime_express = time();
         $express_delivery = 2700;
-        $express_seconds = $express_delivery * (45 * 60);
-        $newTime = $currentTime + $express_seconds;
+        $express_seconds = $express_delivery * (45);
+        $newTime_express = $currentTime_express + $express_seconds;
 
-        echo "Thank you for choosing express delivery! Your order will be done in"." ". (int)date( "i", $newTime)."minutes";
+        echo "Thank you for choosing express delivery! Your order will be done in"." ". (int)date( "i", $newTime_express)."minutes";
     }
 
     //FUNCTION FOR INPUT SECURITY
@@ -153,7 +152,6 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
-
     //COUNTER
 
 $totalValue = 0;
@@ -164,10 +162,6 @@ if (!isset($_COOKIE["totalValue"]))
             $totalValue += $products[$i]["price"];
         }
     }
-
-
-//    $_COOKIE = $i;
-
 
 require 'form-view.php';
 
