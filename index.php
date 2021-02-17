@@ -13,62 +13,99 @@ $email = $street = $streetnumber = $city = $zipcode = "";
 const max_number = 4;
 const street_number = 5;
 
+// Food & drinks array
+
+if (!isset($_GET["food"])){
+
+    $products = [
+        ['name' => 'Club Ham', 'price' => 3.20],
+        ['name' => 'Club Cheese', 'price' => 3],
+        ['name' => 'Club Cheese & Ham', 'price' => 4],
+        ['name' => 'Club Chicken', 'price' => 4],
+        ['name' => 'Club Salmon', 'price' => 5]
+    ];
+}
+
+elseif ($_GET["food"] == 0) {
+
+    $products = [
+        ['name' => 'Club Ham', 'price' => 3.20],
+        ['name' => 'Club Cheese', 'price' => 3],
+        ['name' => 'Club Cheese & Ham', 'price' => 4],
+        ['name' => 'Club Chicken', 'price' => 4],
+        ['name' => 'Club Salmon', 'price' => 5]
+    ];
+}
+else {
+    $products = [
+        ['name' => 'Cola', 'price' => 2],
+        ['name' => 'Fanta', 'price' => 2],
+        ['name' => 'Sprite', 'price' => 2],
+        ['name' => 'Ice-tea', 'price' => 3],
+    ];
+}
+
 // Required features
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["street"])) {
-        $street_error = "street name is required";
-    }
-        elseif (!empty($_POST["street"]) && is_numeric($_POST["street"])) {
-                $street_error = "text characters only";
-        }
-    else {
+        $street_error = "* street name is required";
+    } elseif (!empty($_POST["street"]) && is_numeric($_POST["street"])) {
+        $street_error = "* text characters only";
+    } else {
         $street = modified_input($_POST["street"]);
         $_SESSION["street"] = $street;
     }
 
     if (!empty($_POST["streetnumber"]) && !is_numeric($_POST["streetnumber"])) {
-        $streetnumber_error = "Needs to only consist of numbers";
+        $streetnumber_error = "* Needs to only consist of numbers";
     } elseif (empty($_POST["streetnumber"])) {
-        $streetnumber_error = "street number is required";
+        $streetnumber_error = "* street number is required";
     } elseif (mb_strlen($_POST["streetnumber"]) > street_number) {
-        $streetnumber_error = "Street number exceeds the max value";
+        $streetnumber_error = "* Street number exceeds the max value";
     } else {
         $streetnumber = modified_input($_POST["streetnumber"]);
         $_SESSION["streetnumber"] = $streetnumber;
     }
 
     if (empty($_POST["city"])) {
-        $city_error = "city name is required";
-    }
-    elseif (!empty($_POST["street"]) && is_numeric($_POST["city"])) {
-        $city_error = "text characters only";
-    }
-    else {
+        $city_error = "* city name is required";
+    } elseif (!empty($_POST["street"]) && is_numeric($_POST["city"])) {
+        $city_error = "* text characters only";
+    } else {
         $city = modified_input($_POST["city"]);
         $_SESSION["city"] = $city;
     }
 
     if (!empty($_POST["zipcode"]) && !is_numeric($_POST["zipcode"])) {
-        $zipcode_error = "Needs to only consist of numbers";
+        $zipcode_error = "* Needs to only consist of numbers";
     } elseif (empty($_POST["zipcode"])) {
         $zipcode_error = "zipcode is required";
     } elseif (mb_strlen($_POST["zipcode"]) != max_number) {
-        $zipcode_error = "Needs to be 4 digits";
+        $zipcode_error = "* Needs to be 4 digits";
     } else {
         $zipcode = modified_input($_POST["zipcode"]);
         $_SESSION["zipcode"] = $zipcode;
     }
 
     if (empty($_POST["email"])) {
-        if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-            $email_error = "required";
-        } else {
+        $email_error = "* email address is required";}
+        elseif (!empty($_POST["email"])) {
+            if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) === false)  {
+            $email_error = "* email address is invalid";
+        }
+        else {
             $email = modified_input($_POST["email"]);
             $_SESSION["email"] = $email;
         }
     }
 }
+
+if (isset($_POST["orderButton"]) && !isset($_POST["email"],$_POST["street"],$_POST["streetnumber"],$_POST["city"],$_POST["zipcode"])) {
+    echo "* please fill in the form to complete your order";
+}
+
+
 
 function modified_input($input)
 {
@@ -77,9 +114,6 @@ function modified_input($input)
     $input = htmlspecialchars($input);
     return $input;
 }
-
-
-
 
 
 function whatIsHappening()
@@ -94,21 +128,7 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
-//your products with their price.
-$products = [
-    ['name' => 'Club Ham', 'price' => 3.20],
-    ['name' => 'Club Cheese', 'price' => 3],
-    ['name' => 'Club Cheese & Ham', 'price' => 4],
-    ['name' => 'Club Chicken', 'price' => 4],
-    ['name' => 'Club Salmon', 'price' => 5]
-];
 
-$products = [
-    ['name' => 'Cola', 'price' => 2],
-    ['name' => 'Fanta', 'price' => 2],
-    ['name' => 'Sprite', 'price' => 2],
-    ['name' => 'Ice-tea', 'price' => 3],
-];
 
 $totalValue = 0;
 
