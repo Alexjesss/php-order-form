@@ -8,8 +8,8 @@ session_start();
 
 // Variables & constants
 
-$email_error = $street_error = $streetnumber_error = $city_error = $zipcode_error = "";
-$email = $street = $streetnumber = $city = $zipcode = "";
+$email_error = $street_error = $streetnumber_error = $city_error = $zipcode_error = $order_error = "";
+$email = $street = $streetnumber = $city = $zipcode = $order = "";
 const max_number = 4;
 const street_number = 5;
 
@@ -101,9 +101,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-if (isset($_POST["orderButton"]) && !isset($_POST["email"],$_POST["street"],$_POST["streetnumber"],$_POST["city"],$_POST["zipcode"])) {
-    echo "* please fill in the form to complete your order";
+if (isset($_POST["orderButton"]) && ($email == "" || $street == "" || $streetnumber == "" || $city == "" || $zipcode == "")) {
+    $order_error = "* please fill in the form (todo and array) to complete your order!";
 }
+else {
+    $order = "Everything is filled in, your order has been registered!";
+}
+
+
+
+// Calculate the expected delivery time for the product. For normal delivery all orders are fulfilled in 2 hours, for express delivery it is only 45 minutes.
+//Add this expected time to the confirmation message.
+//If you are wondering: they deliver with drones.
+
 
 
 
@@ -131,6 +141,19 @@ function whatIsHappening()
 
 
 $totalValue = 0;
+
+if (!isset($_COOKIE["totalValue"]))
+if (isset($_POST["products"])) {
+    foreach ($_POST["products"] as $i => $price) {
+
+        $totalValue += $products[$i]["price"];
+
+    }
+}
+
+
+//    $_COOKIE = $i;
+
 
 require 'form-view.php';
 
