@@ -12,8 +12,20 @@ $email_error = $street_error = $streetnumber_error = $city_error = $zipcode_erro
 $email = $street = $streetnumber = $city = $zipcode = $order = "";
 const max_number = 4;
 const street_number = 5;
+$cookie_name = "saved-orders";
+$expire = time() + (86400 * 30);
 
-    // FOOD & DRINKS ARRAY SWITCH
+// COOKIE
+
+if (isset($_COOKIE["saved-orders"])){
+    $totalValue = (float)$_COOKIE["saved-orders"];
+}
+else {
+    $totalValue = 0;
+    setcookie($cookie_name,(string)$totalValue,$expire);
+}
+
+// FOOD & DRINKS ARRAY SWITCH
 
 if (!isset($_GET["food"])) {
 
@@ -42,7 +54,7 @@ if (!isset($_GET["food"])) {
     ];
 }
 
-    // INPUT FIELDS
+// INPUT FIELDS
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -103,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-    // ORDER BUTTON
+// ORDER BUTTON
 
 if (isset($_POST["orderButton"]) && ($email == "" || $street == "" || $streetnumber == "" || $city == "" || $zipcode == "") && !isset($_POST["products"])) {
     $order_error = "* please fill in the form and array to complete your order!";
@@ -111,26 +123,25 @@ if (isset($_POST["orderButton"]) && ($email == "" || $street == "" || $streetnum
     $order = "Everything is filled in, your order has been registered!";
 }
 
-    // CALCULATING ORDERS
+// CALCULATING ORDERS
 
-    if(isset($_POST["products"])) {
-            $currentTime = time();
-            $deliveryHours = 2;
-            $seconds = $deliveryHours * (60 * 60);
-            $newTime = $currentTime + $seconds;
+if (isset($_POST["products"],$_POST["express_delivery"])) {
+    $currentTime_express = time();
+    $express_delivery = 1;
+    $express_seconds = $express_delivery * (45 * 60);
+    $newTime_express = $currentTime_express + $express_seconds;
 
-         echo "Your order will arrive at "." ". date( "H:i", $newTime)." ". "Hours";
-        }
-    elseif (isset($_POST["express_delivery"])) {
-        $currentTime_express = time();
-        $express_delivery = 1;
-        $express_seconds = $express_delivery * (45*60);
-        $newTime_express = $currentTime_express + $express_seconds;
+    echo "Thank you for choosing express delivery! Your order will arrive at" . " " . date("H:i", $newTime_express) . " " . "minutes";
+} elseif (isset($_POST["products"])) {
+    $currentTime = time();
+    $deliveryHours = 2;
+    $seconds = $deliveryHours * (60 * 60);
+    $newTime = $currentTime + $seconds;
 
-        echo "Thank you for choosing express delivery! Your order will arrive at"." ". date( "H:i", $newTime_express)." "."minutes";
-    }
+    echo "Your order will arrive at " . " " . date("H:i", $newTime) . " " . "Hours";
+}
 
-    //FUNCTION FOR INPUT SECURITY
+//FUNCTION FOR INPUT SECURITY
 
 function modified_input($input)
 {
@@ -152,16 +163,18 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
-    //COUNTER
+//COUNTER + COOKIE
 
-$totalValue = 0;
-
-
-    if (isset($_POST["products"])) {
-        foreach ($_POST["products"] as $i => $price) {
-            $totalValue += $products[$i]["price"];
-        }
+if (isset($_POST["products"])) {
+    foreach ($_POST["products"] as $i => $price) {
+        $totalValue += $products[$i]["price"];
     }
+    if
+    (isset($_POST["express_delivery"])){
+        $totalValue += $_POST["express_delivery"];
+    }
+    setcookie($cookie_name,(string)$totalValue,$expire);
+}
 
 require 'form-view.php';
 
