@@ -119,15 +119,15 @@ if (isset($_POST["orderButton"]) && ($email == "" || $street == "" || $streetnum
             $seconds = $deliveryHours * (60 * 60);
             $newTime = $currentTime + $seconds;
 
-         echo "Your order will be done at "." ". date( "H:i", $newTime)." ". "Hours";
+         echo "Your order will arrive at "." ". date( "H:i", $newTime)." ". "Hours";
         }
     elseif (isset($_POST["express_delivery"])) {
         $currentTime_express = time();
-        $express_delivery = 2700;
-        $express_seconds = $express_delivery * (45);
+        $express_delivery = 1;
+        $express_seconds = $express_delivery * (45*60);
         $newTime_express = $currentTime_express + $express_seconds;
 
-        echo "Thank you for choosing express delivery! Your order will be done in"." ". (int)date( "i", $newTime_express)."minutes";
+        echo "Thank you for choosing express delivery! Your order will arrive at"." ". date( "H:i", $newTime_express)." "."minutes";
     }
 
     //FUNCTION FOR INPUT SECURITY
@@ -156,7 +156,7 @@ function whatIsHappening()
 
 $totalValue = 0;
 
-if (!isset($_COOKIE["totalValue"]))
+
     if (isset($_POST["products"])) {
         foreach ($_POST["products"] as $i => $price) {
             $totalValue += $products[$i]["price"];
