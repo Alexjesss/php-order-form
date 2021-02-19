@@ -77,11 +77,11 @@
         </label>
             
         <button type="submit" class="btn btn-primary" name="orderButton">Order!</button>
-        <span><?php if (isset($_POST["orderButton"]) && ($email == "" || $street == "" || $streetnumber == "" || $city == "" || $zipcode == "")) {
-                echo $order_error;} else {echo $order;} ?></span>
+        <span><?php echo $order . $order_error ?></span>
     </form>
 
-    <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.
+    <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks. <br>
+        <strong><?php echo $express . $no_express ?></strong>
     </footer>
 </div>
 
