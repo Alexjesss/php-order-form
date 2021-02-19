@@ -45,7 +45,22 @@ if (!isset($_GET["food"])) {
         ['name' => 'Club Chicken', 'price' => 4],
         ['name' => 'Club Salmon', 'price' => 5]
     ];
-} else {
+}
+ elseif ($_GET["food"] == 3) {
+
+    $products = [
+        ['name' => 'Club Ham', 'price' => 3.20],
+        ['name' => 'Club Cheese', 'price' => 3],
+        ['name' => 'Club Cheese & Ham', 'price' => 4],
+        ['name' => 'Club Chicken', 'price' => 4],
+        ['name' => 'Club Salmon', 'price' => 5],
+        ['name' => 'Cola', 'price' => 2],
+        ['name' => 'Fanta', 'price' => 2],
+        ['name' => 'Sprite', 'price' => 2],
+        ['name' => 'Ice-tea', 'price' => 3]
+    ];
+}
+else {
     $products = [
         ['name' => 'Cola', 'price' => 2],
         ['name' => 'Fanta', 'price' => 2],
@@ -168,7 +183,7 @@ function whatIsHappening()
 
 if (isset($_POST["products"])) {
     foreach ($_POST["products"] as $i => $price) {
-        $totalValue += $products[$i]["price"];
+        $totalValue += $products[$i]["price"]*$_POST["products"][$i];
     }
     if
     (isset($_POST["express_delivery"])){
