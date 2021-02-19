@@ -57,9 +57,9 @@ Make sure to not forget the extra cost for express delivery!
 Sent this e-mail to the user + [a predefined](https://www.php.net/define) e-mail of the restaurant owner.
 
 ## Nice to have features
-- Change the checkboxes to an input field to accept a quantity.
+- [X] Change the checkboxes to an input field to accept a quantity.
 Change the price calculation and email to support buying multiple items.
-- Make it possible to buy both drinks and food in one order. Still have the selections toggleable (no javascript!).
+- [X]  Make it possible to buy both drinks and food in one order. Still have the selections toggleable (no javascript!).
 - Change the products to use Objects instead of an array.
 
 ## Tips
