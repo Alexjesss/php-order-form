@@ -8,8 +8,8 @@ session_start();
 
 // VARIABLES & CONSTANTS
 
-$email_error = $street_error = $streetnumber_error = $city_error = $zipcode_error = $order_error = "";
-$email = $street = $streetnumber = $city = $zipcode = $order = "";
+$email_error = $street_error = $streetnumber_error = $city_error = $zipcode_error = $order_error = $no_express = "";
+$email = $street = $streetnumber = $city = $zipcode = $order = $express = "";
 const max_number = 4;
 const street_number = 5;
 $cookie_name = "saved-orders";
@@ -117,9 +117,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 // ORDER BUTTON
 
-if (isset($_POST["orderButton"]) && ($email == "" || $street == "" || $streetnumber == "" || $city == "" || $zipcode == "") && !isset($_POST["products"])) {
-    $order_error = "* please fill in the form and array to complete your order!";
-} else {
+if (isset($_POST["orderButton"]) && ($email == "" || $street == "" || $streetnumber == "" || $city == "" || $zipcode == "")) {
+    $order_error = "* please fill in the form to complete your order!";
+}
+ else {
     $order = "Everything is filled in, your order has been registered!";
 }
 
@@ -131,14 +132,14 @@ if (isset($_POST["products"],$_POST["express_delivery"])) {
     $express_seconds = $express_delivery * (45 * 60);
     $newTime_express = $currentTime_express + $express_seconds;
 
-    echo "Thank you for choosing express delivery! Your order will arrive at" . " " . date("H:i", $newTime_express) . " " . "minutes";
+    $express = "Thank you for choosing express delivery! Your order will arrive at" . " " . date("H:i", $newTime_express) . " " . "minutes";
 } elseif (isset($_POST["products"])) {
     $currentTime = time();
     $deliveryHours = 2;
     $seconds = $deliveryHours * (60 * 60);
     $newTime = $currentTime + $seconds;
 
-    echo "Your order will arrive at " . " " . date("H:i", $newTime) . " " . "Hours";
+    $no_express = "Your order will arrive at " . " " . date("H:i", $newTime) . " " . "Hours";
 }
 
 //FUNCTION FOR INPUT SECURITY
